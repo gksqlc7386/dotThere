@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct OtherView: View {
+    var exportAction: () -> Void
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("OTHER")
@@ -15,9 +17,7 @@ struct OtherView: View {
                 .foregroundStyle(Color.gray)
                 .padding(.leading, 26)
             
-            Button(action: {
-                print("Button Tapped")
-            }) {
+            Button(action: exportAction) {
                 HStack {
                     Image(systemName: "square.and.arrow.up")
                         .foregroundColor(.blue)
@@ -42,5 +42,5 @@ struct OtherView: View {
 }
 
 #Preview {
-    OtherView()
+    OtherView(exportAction: {})
 }

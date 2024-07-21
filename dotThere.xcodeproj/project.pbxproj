@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		ED748ADB2C4CD49F00A12467 /* PDFCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED748ADA2C4CD49F00A12467 /* PDFCreator.swift */; };
+		ED748ADD2C4CE10300A12467 /* PDFPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED748ADC2C4CE10300A12467 /* PDFPreview.swift */; };
 		EDC9ACA12C4A5862002E4A81 /* dotThereApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC9ACA02C4A5862002E4A81 /* dotThereApp.swift */; };
 		EDC9ACA32C4A5862002E4A81 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC9ACA22C4A5862002E4A81 /* ContentView.swift */; };
 		EDC9ACA52C4A5863002E4A81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDC9ACA42C4A5863002E4A81 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		ED748ADA2C4CD49F00A12467 /* PDFCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFCreator.swift; sourceTree = "<group>"; };
+		ED748ADC2C4CE10300A12467 /* PDFPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFPreview.swift; sourceTree = "<group>"; };
 		EDC9AC9D2C4A5862002E4A81 /* dotThere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dotThere.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDC9ACA02C4A5862002E4A81 /* dotThereApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dotThereApp.swift; sourceTree = "<group>"; };
 		EDC9ACA22C4A5862002E4A81 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				EDC9ACB62C4AA9D7002E4A81 /* OtherView.swift */,
 				EDC9ACB82C4AAA42002E4A81 /* MapView.swift */,
 				ED748ADA2C4CD49F00A12467 /* PDFCreator.swift */,
+				ED748ADC2C4CE10300A12467 /* PDFPreview.swift */,
 				EDC9ACA42C4A5863002E4A81 /* Assets.xcassets */,
 				EDC9ACA62C4A5864002E4A81 /* Preview Content */,
 			);
@@ -159,6 +162,7 @@
 				EDC9ACB52C4AA8B7002E4A81 /* PostView.swift in Sources */,
 				EDC9ACA12C4A5862002E4A81 /* dotThereApp.swift in Sources */,
 				EDC9ACB72C4AA9D7002E4A81 /* OtherView.swift in Sources */,
+				ED748ADD2C4CE10300A12467 /* PDFPreview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
