@@ -7,7 +7,6 @@
 
 import SwiftUI
 import PDFKit
-import QuickLook
 
 class PDFCreator {
     static func createPDF(view: UIView) -> URL? {
@@ -21,7 +20,7 @@ class PDFCreator {
         }
         
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let pdfPath = documentsPath.appendingPathComponent("PostView.pdf")
+        let pdfPath = documentsPath.appendingPathComponent("DetailView.pdf")
         
         do {
             try data.write(to: pdfPath)

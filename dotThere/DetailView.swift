@@ -10,6 +10,7 @@ import PDFKit
 import QuickLook
 
 struct DetailView: View {
+    
     @State private var pdfURL: URL? = nil
     @State private var showPDFPreview = false
     
@@ -25,30 +26,28 @@ struct DetailView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: Button("Save PDF") {
-                exportToPDF()
-            })
-        }
-        .sheet(isPresented: $showPDFPreview) {
-            if let url = pdfURL {
-                PDFPreview(url: url, onSave: savePDF)
-            }
+            .navigationBarItems(trailing: EditButton())
         }
     }
     
     func exportToPDF() {
-        let hostingController = UIHostingController(rootView: contentView)
+        let hostingController = UIHostingController(rootView: pdfView)
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else {
+            return
+        }
+        
         let view = hostingController.view
-        let window = UIApplication.shared.windows.first
-        view?.frame = window?.frame ?? .zero
+        view?.frame = window.bounds
         
         if let url = PDFCreator.createPDF(view: view!) {
             pdfURL = url
-            showPDFPreview = true
+            print("PDF URL: \(url)")
+            savePDF(url: url)
         }
     }
     
-    var contentView: some View {
+    var pdfView: some View {
         ZStack {
             Color(.basic)
                 .ignoresSafeArea()
@@ -61,11 +60,13 @@ struct DetailView: View {
         }
     }
     
-    func savePDF() {
-        if let url = pdfURL {
-            let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-            UIApplication.shared.windows.first?.rootViewController?.present(activityViewController, animated: true, completion: nil)
+    func savePDF(url: URL) {
+        let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else {
+            return
         }
+        window.rootViewController?.present(activityViewController, animated: true, completion: nil)
     }
 }
 
