@@ -10,13 +10,13 @@ import SwiftUI
 struct PostView: View {
     
     let images: [String] = []
-    let titleLabel: String = ""
-    let contentLabel: String = ""
-    
-//  let images: [String] = ["image1", "image2", "image3", "image4", "image5", "image6"]
-//  let titleLabel: String = "Title"
-//  let contentLabel: String = "What an enchanting day in Périgueux! The cobblestone streets whispered ancient tales as I strolled through the maze of alleys. The grand cathedral stood proudly, its spires reaching for the sky, as if tickling the clouds. Oh, and the market!What an enchanting day in Périgueux! The cobblestone streets whispered ancient tales as I strolled through the maze of alleys. The grand cathedral stood proudly, its spires reaching for the sky, as if tickling the clouds. Oh, and the market!"
+    let initialTitleLabel: String = ""
+    let initialContentLabel: String = ""
     let dateLabel: String = "Sunday, Jan 21"
+    
+    @State private var isEditing: Bool = false
+    @State private var titleLabel: String = ""
+    @State private var contentLabel: String = ""
     
     @Binding var isExpandedText: Bool
     
@@ -56,7 +56,7 @@ struct PostView: View {
                         .padding(.bottom)
                         .padding(.horizontal)
                     
-                // images
+                    // images
                 } else {
                     HStack(spacing: 4) {
                         if images.count == 1 {
@@ -84,45 +84,79 @@ struct PostView: View {
                 
                 VStack(alignment: .center, spacing: 0) {
                     // Post title
-                    if titleLabel.isEmpty {
-                        Text("Enter a title..")
-                            .font(.title3)
-                            .fontWeight(.regular)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 16)
-                            .padding(.bottom, 6)
-                        
-                    } else {
-                        Text(titleLabel)
+                    if isEditing {
+                        TextField("Enter a title..", text: $titleLabel)
                             .font(.title3)
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 12)
+                            .padding(.horizontal, 16)
                             .padding(.bottom, 6)
-                            .lineLimit(2)
+                        
+                    } else {
+                        if titleLabel.isEmpty {
+                            Text("Enter a title..")
+                                .font(.title3)
+                                .fontWeight(.regular)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal, 16)
+                                .padding(.bottom, 6)
+                            
+                        } else {
+                            Text(titleLabel)
+                                .font(.title3)
+                                .fontWeight(.bold)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal, 16)
+                                .padding(.bottom, 6)
+                                .lineLimit(2)
+                        }
                     }
                     
                     // Post content text
-                    if contentLabel.isEmpty {
-                        Text("The memo is empty")
-                            .foregroundStyle(.gray)
-                            .font(.callout)
-                            .frame(maxWidth: .infinity, minHeight: 120, alignment: .topLeading)
-                            .padding(.bottom, 6)
-                            .padding(.horizontal, 16)
+                    if isEditing {
+                        ZStack(alignment: .leading) {
+                            TextEditor(text: $contentLabel)
+                                .font(.callout)
+                                .frame(maxWidth: .infinity, minHeight: 120, alignment: .topLeading)
+                                .padding(.bottom, 6)
+                                .padding(.horizontal, 16)
+                            
+                            if contentLabel.isEmpty {
+                                Text("The memo is empty")
+                                    .foregroundStyle(.placeholder)
+                                    .font(.callout)
+                                    .fontWeight(.bold)
+                                    .frame(maxWidth: .infinity, minHeight: 120, alignment: .topLeading)
+                                    .padding(.vertical, 6)
+                                    .padding(.horizontal, 16)
+                                    .allowsHitTesting(false)
+                            }
+                        }
+                        .frame(minHeight: 120)
+                       
                         
                     } else {
-                        Text(contentLabel)
-                            .font(.callout)
-                            .frame(maxWidth: .infinity, maxHeight: isExpandedText ? nil : 120, alignment: .topLeading)
-                            .padding(.bottom, 6)
-                            .padding(.horizontal, 12)
-                            .lineLimit(isExpandedText ? nil : 5)
-                            .onTapGesture {
-                                withAnimation() {
-                                    isExpandedText.toggle()
+                        if contentLabel.isEmpty {
+                            Text("The memo is empty")
+                                .foregroundStyle(.gray)
+                                .font(.callout)
+                                .frame(maxWidth: .infinity, minHeight: 120, alignment: .topLeading)
+                                .padding(.bottom, 6)
+                                .padding(.horizontal, 16)
+                            
+                        } else {
+                            Text(contentLabel)
+                                .font(.callout)
+                                .frame(maxWidth: .infinity, minHeight: isExpandedText ? nil : 120, alignment: .topLeading)
+                                .padding(.bottom, 6)
+                                .padding(.horizontal, 16)
+                                .lineLimit(isExpandedText ? nil : 5)
+                                .onTapGesture {
+                                    withAnimation() {
+                                        isExpandedText.toggle()
+                                    }
                                 }
-                            }
+                        }
                     }
                     
                     Divider()
@@ -136,9 +170,13 @@ struct PostView: View {
                             .padding(.leading)
                         Spacer()
                         Button(action: {
-                            print("Button tapped")
+                            isEditing.toggle()
+                            if !isEditing {
+                                print("Changes saved")
+                            }
                         }) {
-                            Image(systemName: "pencil.line")
+                            Text(isEditing ? "Done" : "")
+                            Image(systemName: isEditing ? "" : "pencil.line")
                                 .font(.footnote)
                                 .foregroundColor(.blue)
                                 .padding(.trailing)
