@@ -20,7 +20,7 @@ class PDFCreator {
         }
         
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let pdfPath = documentsPath.appendingPathComponent("DetailView.pdf")
+        let pdfPath = documentsPath.appendingPathComponent("dotThere.pdf")
         
         do {
             try data.write(to: pdfPath)

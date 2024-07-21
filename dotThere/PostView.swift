@@ -9,51 +9,127 @@ import SwiftUI
 
 struct PostView: View {
     
-    let images: [String] = ["image1", "image2", "image3", "image4", "image5", "image6"]
+    let images: [String] = []
+    let titleLabel: String = ""
+    let contentLabel: String = ""
+    
+//  let images: [String] = ["image1", "image2", "image3", "image4", "image5", "image6"]
+//  let titleLabel: String = "Title"
+//  let contentLabel: String = "What an enchanting day in Périgueux! The cobblestone streets whispered ancient tales as I strolled through the maze of alleys. The grand cathedral stood proudly, its spires reaching for the sky, as if tickling the clouds. Oh, and the market!What an enchanting day in Périgueux! The cobblestone streets whispered ancient tales as I strolled through the maze of alleys. The grand cathedral stood proudly, its spires reaching for the sky, as if tickling the clouds. Oh, and the market!"
+    let dateLabel: String = "Sunday, Jan 21"
+    
+    @Binding var isExpandedText: Bool
     
     var body: some View {
         VStack(alignment: .leading) {
+            // Header text
             Text("POST")
                 .font(.caption)
                 .foregroundStyle(Color.gray)
                 .padding(.leading, 26)
             
             VStack(spacing: 0) {
-                HStack(spacing: 4) {
-                    if images.count == 1 {
-                        singleImageView(image: images[0])
-                    } else if images.count == 2 {
-                        twoImagesView(images: images)
-                    } else if images.count == 3 {
-                        threeImagesView(images: images)
-                    } else if images.count == 4 {
-                        fourImagesView(images: images)
-                    } else if images.count == 5 {
-                        fiveImagesView(images: images)
-                    } else {
-                        sixOrMoreImagesView(images: images)
+                // images isEmpty
+                if images.isEmpty {
+                    //Add Button
+                    Button(action: { print("Button Tapped") }) {
+                        HStack {
+                            Image(systemName: "photo.stack")
+                                .foregroundColor(.blue)
+                                .padding(.leading, 12)
+                            Text("Add Photos...")
+                                .foregroundStyle(Color.black)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.secondary)
+                                .padding(.trailing, 12)
+                        }
+                        .frame(height: 26)
+                        .padding(10)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 6)
+                    
+                    Divider()
+                        .padding(.bottom)
+                        .padding(.horizontal)
+                    
+                // images
+                } else {
+                    HStack(spacing: 4) {
+                        if images.count == 1 {
+                            singleImageView(image: images[0])
+                        } else if images.count == 2 {
+                            twoImagesView(images: images)
+                        } else if images.count == 3 {
+                            threeImagesView(images: images)
+                        } else if images.count == 4 {
+                            fourImagesView(images: images)
+                        } else if images.count == 5 {
+                            fiveImagesView(images: images)
+                        } else {
+                            sixOrMoreImagesView(images: images)
+                        }
+                    }
+                    .cornerRadius(10)
+                    .padding(.top, 4)
+                    .padding(.horizontal, 4)
+                    .padding(.bottom, -10)
+                    .onTapGesture {
+                        print("move to gallery?")
                     }
                 }
-                .cornerRadius(10)
-                .padding(.top, 4)
-                .padding(.horizontal, 4)
-                .padding(.bottom, -10)
                 
                 VStack(alignment: .center, spacing: 0) {
-                    Text("Title")
-                        .font(.title3)
-                        .fontWeight(.bold)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 12)
-                    Text("What an enchanting day in Périgueux! The cobblestone streets whispered ancient tales as I strolled through the maze of alleys. The grand cathedral stood proudly, its spires reaching for the sky, as if tickling the clouds. Oh, and the market!")
-                        .frame(height: 120, alignment: .leading)
-                        .font(.callout)
-                        .lineLimit(5)
-                        .padding(.bottom, 6)
-                        .padding(.horizontal, 12)
+                    // Post title
+                    if titleLabel.isEmpty {
+                        Text("Enter a title..")
+                            .font(.title3)
+                            .fontWeight(.regular)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 16)
+                            .padding(.bottom, 6)
+                        
+                    } else {
+                        Text(titleLabel)
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 12)
+                            .padding(.bottom, 6)
+                            .lineLimit(2)
+                    }
+                    
+                    // Post content text
+                    if contentLabel.isEmpty {
+                        Text("The memo is empty")
+                            .foregroundStyle(.gray)
+                            .font(.callout)
+                            .frame(maxWidth: .infinity, minHeight: 120, alignment: .topLeading)
+                            .padding(.bottom, 6)
+                            .padding(.horizontal, 16)
+                        
+                    } else {
+                        Text(contentLabel)
+                            .font(.callout)
+                            .frame(maxWidth: .infinity, maxHeight: isExpandedText ? nil : 120, alignment: .topLeading)
+                            .padding(.bottom, 6)
+                            .padding(.horizontal, 12)
+                            .lineLimit(isExpandedText ? nil : 5)
+                            .onTapGesture {
+                                withAnimation() {
+                                    isExpandedText.toggle()
+                                }
+                            }
+                    }
+                    
                     Divider()
+                    
+                    // Date and edit button
                     HStack() {
-                        Text("Sunday, Jan 21")
+                        Text(dateLabel)
                             .font(.footnote)
                             .fontWeight(.bold)
                             .foregroundColor(.gray)
@@ -64,10 +140,11 @@ struct PostView: View {
                         }) {
                             Image(systemName: "pencil.line")
                                 .font(.footnote)
+                                .foregroundColor(.blue)
                                 .padding(.trailing)
                         }
                     }
-                    .padding(.vertical, 6)
+                    .padding(.vertical, 8)
                 }
             }
             .frame(maxWidth: .infinity)
@@ -284,5 +361,6 @@ struct PostView: View {
 }
 
 #Preview {
-    PostView()
+    @State var isExpandedText = true
+    return PostView(isExpandedText: $isExpandedText)
 }

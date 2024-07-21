@@ -12,11 +12,13 @@ struct OtherView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
+            // Header text
             Text("OTHER")
                 .font(.caption)
                 .foregroundStyle(Color.gray)
                 .padding(.leading, 26)
             
+            // Button
             Button(action: exportAction) {
                 HStack {
                     Image(systemName: "square.and.arrow.up")
