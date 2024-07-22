@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED30FA532C4DDFF900C71F88 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED30FA522C4DDFF900C71F88 /* PhotoPicker.swift */; };
 		ED748ADB2C4CD49F00A12467 /* PDFCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED748ADA2C4CD49F00A12467 /* PDFCreator.swift */; };
 		EDC9ACA12C4A5862002E4A81 /* dotThereApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC9ACA02C4A5862002E4A81 /* dotThereApp.swift */; };
 		EDC9ACA32C4A5862002E4A81 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC9ACA22C4A5862002E4A81 /* ContentView.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		ED30FA522C4DDFF900C71F88 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		ED748ADA2C4CD49F00A12467 /* PDFCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFCreator.swift; sourceTree = "<group>"; };
 		EDC9AC9D2C4A5862002E4A81 /* dotThere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dotThere.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDC9ACA02C4A5862002E4A81 /* dotThereApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dotThereApp.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				EDC9ACB62C4AA9D7002E4A81 /* OtherView.swift */,
 				EDC9ACB82C4AAA42002E4A81 /* MapView.swift */,
 				ED748ADA2C4CD49F00A12467 /* PDFCreator.swift */,
+				ED30FA522C4DDFF900C71F88 /* PhotoPicker.swift */,
 				EDC9ACA42C4A5863002E4A81 /* Assets.xcassets */,
 				EDC9ACA62C4A5864002E4A81 /* Preview Content */,
 			);
@@ -156,6 +159,7 @@
 				EDC9ACB92C4AAA42002E4A81 /* MapView.swift in Sources */,
 				EDC9ACAF2C4A5AB7002E4A81 /* DetailView.swift in Sources */,
 				ED748ADB2C4CD49F00A12467 /* PDFCreator.swift in Sources */,
+				ED30FA532C4DDFF900C71F88 /* PhotoPicker.swift in Sources */,
 				EDC9ACB52C4AA8B7002E4A81 /* PostView.swift in Sources */,
 				EDC9ACA12C4A5862002E4A81 /* dotThereApp.swift in Sources */,
 				EDC9ACB72C4AA9D7002E4A81 /* OtherView.swift in Sources */,

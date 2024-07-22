@@ -9,9 +9,6 @@ import SwiftUI
 
 struct PostView: View {
     
-    let images: [String] = []
-    let initialTitleLabel: String = ""
-    let initialContentLabel: String = ""
     let dateLabel: String = "Sunday, Jan 21"
     
     @State private var isEditing: Bool = false
@@ -19,6 +16,10 @@ struct PostView: View {
     @State private var contentLabel: String = ""
     
     @Binding var isExpandedText: Bool
+    
+    @State private var showImagePicker = false
+    //@State private var selectedImages: [UIImage] = []
+    @State private var images: [UIImage] = []
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -32,7 +33,7 @@ struct PostView: View {
                 // images isEmpty
                 if images.isEmpty {
                     //Add Button
-                    Button(action: { print("Button Tapped") }) {
+                    Button(action: { showImagePicker.toggle() }) {
                         HStack {
                             Image(systemName: "photo.stack")
                                 .foregroundColor(.blue)
@@ -51,6 +52,9 @@ struct PostView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 6)
+                    .sheet(isPresented: $showImagePicker) {
+                        PhotoPicker(images: $images)
+                    }
                     
                     Divider()
                         .padding(.bottom)
@@ -133,7 +137,6 @@ struct PostView: View {
                             }
                         }
                         .frame(minHeight: 120)
-                       
                         
                     } else {
                         if contentLabel.isEmpty {
@@ -194,21 +197,25 @@ struct PostView: View {
         .padding(.top, 26)
     }
     
-    private func singleImageView(image: String) -> some View {
-        Image(image)
-            .resizable()
-            .scaledToFill()
-            .frame(maxWidth: .infinity)
-            .clipped()
-            .cornerRadius(8)
+    private func singleImageView(image: UIImage) -> some View {
+        GeometryReader { geometry in
+            let side = geometry.size.width
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFill()
+                .frame(width: side, height: side / 2)
+                .clipped()
+                .cornerRadius(8)
+        }
+        .frame(height: (UIScreen.main.bounds.width) / 2)
     }
     
-    private func twoImagesView(images: [String]) -> some View {
+    private func twoImagesView(images: [UIImage]) -> some View {
         GeometryReader { geometry in
             let side = (geometry.size.width - 4) / 2
             HStack(spacing: 4) {
-                ForEach(images, id: \.self) { image in
-                    Image(image)
+                ForEach(images.indices, id: \.self) { index in
+                    Image(uiImage: images[index])
                         .resizable()
                         .scaledToFill()
                         .frame(width: side, height: side)
@@ -220,12 +227,12 @@ struct PostView: View {
         .frame(height: (UIScreen.main.bounds.width) / 2)
     }
     
-    private func threeImagesView(images: [String]) -> some View {
+    private func threeImagesView(images: [UIImage]) -> some View {
         GeometryReader { geometry in
             let side = (geometry.size.width - 4) / 2
             let smallSide = (side - 4) / 2
             HStack(spacing: 4) {
-                Image(images[0])
+                Image(uiImage: images[0])
                     .resizable()
                     .scaledToFill()
                     .frame(width: side, height: side)
@@ -234,12 +241,12 @@ struct PostView: View {
                 
                 VStack(spacing: 4) {
                     ForEach(images.prefix(3).dropFirst(), id: \.self) { image in
-                        Image(image)
+                        Image(uiImage: image)
                             .resizable()
                             .scaledToFill()
                             .frame(width: smallSide * 2 + 4, height: smallSide)
                             .clipped()
-                            .cornerRadius(8)
+                            .cornerRadius(6)
                     }
                 }
             }
@@ -247,12 +254,12 @@ struct PostView: View {
         .frame(height: (UIScreen.main.bounds.width) / 2)
     }
     
-    private func fourImagesView(images: [String]) -> some View {
+    private func fourImagesView(images: [UIImage]) -> some View {
         GeometryReader { geometry in
             let side = (geometry.size.width - 4) / 2
             let smallSide = (side - 4) / 2
             HStack(spacing: 4) {
-                Image(images[0])
+                Image(uiImage: images[0])
                     .resizable()
                     .scaledToFill()
                     .frame(width: side, height: side)
@@ -260,25 +267,25 @@ struct PostView: View {
                     .cornerRadius(8)
                 
                 VStack(spacing: 4) {
-                    Image(images[1])
+                    Image(uiImage: images[1])
                         .resizable()
                         .scaledToFill()
                         .frame(width: side, height: smallSide)
                         .clipped()
                         .cornerRadius(8)
                     HStack(spacing: 4) {
-                        Image(images[2])
+                        Image(uiImage: images[2])
                             .resizable()
                             .scaledToFill()
                             .frame(width: smallSide, height: smallSide)
                             .clipped()
-                            .cornerRadius(8)
-                        Image(images[3])
+                            .cornerRadius(6)
+                        Image(uiImage: images[3])
                             .resizable()
                             .scaledToFill()
                             .frame(width: smallSide, height: smallSide)
                             .clipped()
-                            .cornerRadius(8)
+                            .cornerRadius(6)
                     }
                 }
             }
@@ -286,12 +293,12 @@ struct PostView: View {
         .frame(height: (UIScreen.main.bounds.width) / 2)
     }
     
-    private func fiveImagesView(images: [String]) -> some View {
+    private func fiveImagesView(images: [UIImage]) -> some View {
         GeometryReader { geometry in
             let side = (geometry.size.width - 4) / 2
             let smallSide = (side - 4) / 2
             HStack(spacing: 4) {
-                Image(images[0])
+                Image(uiImage: images[0])
                     .resizable()
                     .scaledToFill()
                     .frame(width: side, height: side)
@@ -300,32 +307,32 @@ struct PostView: View {
                 
                 VStack(spacing: 4) {
                     HStack(spacing: 4) {
-                        Image(images[1])
+                        Image(uiImage: images[1])
                             .resizable()
                             .scaledToFill()
                             .frame(width: smallSide, height: smallSide)
                             .clipped()
-                            .cornerRadius(8)
-                        Image(images[2])
+                            .cornerRadius(6)
+                        Image(uiImage: images[2])
                             .resizable()
                             .scaledToFill()
                             .frame(width: smallSide, height: smallSide)
                             .clipped()
-                            .cornerRadius(8)
+                            .cornerRadius(6)
                     }
                     HStack(spacing: 4) {
-                        Image(images[3])
+                        Image(uiImage: images[3])
                             .resizable()
                             .scaledToFill()
                             .frame(width: smallSide, height: smallSide)
                             .clipped()
-                            .cornerRadius(8)
-                        Image(images[4])
+                            .cornerRadius(6)
+                        Image(uiImage: images[4])
                             .resizable()
                             .scaledToFill()
                             .frame(width: smallSide, height: smallSide)
                             .clipped()
-                            .cornerRadius(8)
+                            .cornerRadius(6)
                     }
                 }
             }
@@ -333,12 +340,12 @@ struct PostView: View {
         .frame(height: (UIScreen.main.bounds.width) / 2)
     }
     
-    private func sixOrMoreImagesView(images: [String]) -> some View {
+    private func sixOrMoreImagesView(images: [UIImage]) -> some View {
         GeometryReader { geometry in
             let side = (geometry.size.width - 4) / 2
             let smallSide = (side - 4) / 2
             HStack(spacing: 4) {
-                Image(images[0])
+                Image(uiImage: images[0])
                     .resizable()
                     .scaledToFill()
                     .frame(width: side, height: side)
@@ -347,13 +354,13 @@ struct PostView: View {
                 
                 VStack(spacing: 4) {
                     HStack(spacing: 4) {
-                        Image(images[1])
+                        Image(uiImage: images[1])
                             .resizable()
                             .scaledToFill()
                             .frame(width: smallSide, height: smallSide)
                             .clipped()
                             .cornerRadius(8)
-                        Image(images[2])
+                        Image(uiImage: images[2])
                             .resizable()
                             .scaledToFill()
                             .frame(width: smallSide, height: smallSide)
@@ -361,7 +368,7 @@ struct PostView: View {
                             .cornerRadius(8)
                     }
                     HStack(spacing: 4) {
-                        Image(images[3])
+                        Image(uiImage: images[3])
                             .resizable()
                             .scaledToFill()
                             .frame(width: smallSide, height: smallSide)
@@ -369,7 +376,7 @@ struct PostView: View {
                             .cornerRadius(8)
                         if images.count > 5 {
                             ZStack {
-                                Image(images[4])
+                                Image(uiImage: images[4])
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: smallSide, height: smallSide)
@@ -383,7 +390,7 @@ struct PostView: View {
                                     .foregroundColor(.white)
                             }
                         } else {
-                            Image(images[4])
+                            Image(uiImage: images[4])
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: smallSide, height: smallSide)
